@@ -1,0 +1,12 @@
+{
+  "mods": [
+    {
+      "name": "base",
+      "enabled": true
+    },
+    {
+      "name": "0.17_science",
+      "enabled": true
+    }
+  ]
+}
