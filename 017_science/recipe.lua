@@ -35,6 +35,7 @@ data:extend(
 		},
 		icon = "__017_science__/graphics/icons/chemical.png",
 		icon_size = 64,
+		result_count = 2, --(+)
 		result = "science-pack-3"
 	},
 	{
