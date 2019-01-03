@@ -91,11 +91,11 @@ data:extend(
 	--LDS changes
 	{		
 		type = "recipe",
-		name = "low-density-structure",
+		name = "17-low-density-structure",
 		category = "crafting",
 		normal =
 		{
-			energy_required = 30,
+			energy_required = 20, --30
 			enabled = false,
 			ingredients =
 			{
@@ -107,7 +107,7 @@ data:extend(
 		},
 		expensive =
 		{
-			energy_required = 30,
+			energy_required = 20, --30
 			enabled = false,
 			ingredients =
 			{
@@ -116,6 +116,8 @@ data:extend(
 				{"plastic-bar", 10}
 			},
 			result= "low-density-structure"
-		}
+		},
+		icon = "__017_science__/graphics/icons/LDS.png",
+		icon_size = 32
 	}
 })

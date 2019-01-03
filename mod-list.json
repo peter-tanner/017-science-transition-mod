@@ -10,7 +10,7 @@
     },
     {
       "name": "017_science_migration",
-      "enabled": true
+      "enabled": false
     }
   ]
 }

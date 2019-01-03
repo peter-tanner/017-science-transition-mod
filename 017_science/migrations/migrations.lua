@@ -18,6 +18,7 @@ for i, force in pairs(game.forces) do
 	end
 	if force.technologies["advanced-electronics-2"].researched then 
 		force.recipes["low-density-structure"].enabled = true
+		force.recipes["17-low-density-structure"].enabled = true
 		force.recipes["17-utility-science-pack"].enabled = true
 	end
 end
