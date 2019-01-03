@@ -7,6 +7,10 @@
     {
       "name": "017_science",
       "enabled": true
+    },
+    {
+      "name": "017_science_migration",
+      "enabled": true
     }
   ]
 }

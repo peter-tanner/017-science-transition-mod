@@ -1,0 +1,10 @@
+{
+  "name": "017_science_migration",
+  "version": "0.0.1",
+  "factorio_version": "0.16",
+  "title": "0.17 science (migration)",
+  "author": "npc_strider(morley376)",
+  "contact": "",
+  "homepage": "http://steamcommunity.com/id/morley376",
+  "description": "migrate the mod's recipes to the vanilla recipe internal name (so that the mod can be uninstalled)"
+}
