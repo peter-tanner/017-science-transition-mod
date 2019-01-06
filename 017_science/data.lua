@@ -22,7 +22,7 @@ end
 local technology = data.raw["technology"]["rocket-silo"].prerequisites
 for _=1, #technology do
 	if technology[_] == "rocket-speed-5" then
-		technology[_] = nil
+		table.remove(technology, _)
 	end
 end
 
