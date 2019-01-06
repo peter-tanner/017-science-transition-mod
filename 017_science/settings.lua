@@ -17,5 +17,11 @@ data:extend(
         name = "017-assem-lim",
         setting_type = "startup",
         default_value = true
+    },
+    {
+        type = "bool-setting",
+        name = "017-old-science",
+        setting_type = "startup",
+        default_value = false
     }	
 })

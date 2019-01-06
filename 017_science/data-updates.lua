@@ -17,6 +17,22 @@ for _, mod in pairs(data.raw.module) do
 	end
 end
 
+data.raw["technology"]["rocket-silo"].unit.ingredients =
+{
+	{"science-pack-1", 1},
+	{"science-pack-2", 1},
+	{"science-pack-3", 1},
+	--{"military-science-pack", 1},
+	{"production-science-pack", 1},
+	{"high-tech-science-pack", 1}
+}
+
+data.raw["recipe"]["atomic-bomb"].ingredients =
+{
+	{"rocket-control-unit", 15}, --{"processing-unit", 20},
+	{"explosives", 10},
+	{"uranium-235", 30}
+}
 --HUGE THANKS to Dimava for the following changes
 --Added options for some changes (for modded users)
 
