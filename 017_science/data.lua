@@ -7,7 +7,6 @@ table.insert(data.raw["technology"]["advanced-electronics-2"].effects, {type = "
 
 table.insert(data.raw["technology"]["advanced-electronics-2"].effects, {type = "unlock-recipe",recipe = "rocket-control-unit"})
 
-table.insert(data.raw["technology"]["advanced-electronics-2"].effects, {type = "unlock-recipe",recipe = "low-density-structure"})
 table.insert(data.raw["technology"]["advanced-electronics-2"].effects, {type = "unlock-recipe",recipe = "17-low-density-structure"}) --LDS unlock for pre-rocket bases
 
 table.insert(data.raw["technology"]["advanced-material-processing-2"].effects, {type = "unlock-recipe",recipe = "rocket-fuel"})
@@ -41,5 +40,16 @@ if not settings.startup["017-old-science"].value then
 
 	data.raw["recipe"]["high-tech-science-pack"].hidden = true
 	local effects = data.raw["technology"]["advanced-electronics-2"].effects
-	for _=1, #effects do if effects[_].type == "unlock-recipe" and effects[_].recipe == "high-tech-science-pack" then effects[_] = nil end end	
+	for _=1, #effects do if effects[_].type == "unlock-recipe" and effects[_].recipe == "high-tech-science-pack" then effects[_] = nil end end
+
+	data.raw["recipe"]["low-density-structure"].normal.hidden = true
+	data.raw["recipe"]["low-density-structure"].expensive.hidden = true	
+elseif settings.startup["017-old-science"].value then
+	table.insert(data.raw["technology"]["advanced-electronics-2"].effects, {type = "unlock-recipe",recipe = "low-density-structure"})
+	data.raw["recipe"]["science-pack-3"].hidden = false
+	data.raw["recipe"]["military-science-pack"].hidden = false
+	data.raw["recipe"]["production-science-pack"].hidden = false
+	data.raw["recipe"]["high-tech-science-pack"].hidden = false
+	data.raw["recipe"]["low-density-structure"].normal.hidden = false
+	data.raw["recipe"]["low-density-structure"].expensive.hidden = false	
 end
