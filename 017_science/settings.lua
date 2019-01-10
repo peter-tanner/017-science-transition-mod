@@ -23,5 +23,11 @@ data:extend(
         name = "017-old-science",
         setting_type = "startup",
         default_value = false
-    }	
+    },
+    {
+        type = "bool-setting",
+        name = "017-recipes-changes",
+        setting_type = "startup",
+        default_value = true
+    }
 })

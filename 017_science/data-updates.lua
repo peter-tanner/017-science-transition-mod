@@ -17,22 +17,47 @@ for _, mod in pairs(data.raw.module) do
 	end
 end
 
-data.raw["technology"]["rocket-silo"].unit.ingredients =
-{
-	{"science-pack-1", 1},
-	{"science-pack-2", 1},
-	{"science-pack-3", 1},
-	--{"military-science-pack", 1},
-	{"production-science-pack", 1},
-	{"high-tech-science-pack", 1}
-}
+local function replace_table(table, condition, replace)
+	for _=1, #table do
+		if table[_][1] == condition then
+			table[_] = replace
+		end
+	end
+end
 
-data.raw["recipe"]["atomic-bomb"].ingredients =
-{
-	{"rocket-control-unit", 15}, --{"processing-unit", 20},
-	{"explosives", 10},
-	{"uranium-235", 30}
-}
+local function prerequisites(technology, condition, replace)
+	for _=1, #technology do
+		if technology[_] == condition then
+			table.remove(technology, _)
+			if replace ~= nil then
+				table.insert(technology, replace)
+			end
+		end
+	end
+end
+
+replace_table(data.raw["technology"]["rocket-silo"].unit.ingredients, "military-science-pack", nil)
+
+if settings.startup["017-recipes-changes"].value then
+	replace_table(data.raw["recipe"]["atomic-bomb"].ingredients, "processing-unit", {"rocket-control-unit", 15})
+	
+	replace_table(data.raw["recipe"]["power-armor-mk2"].ingredients, "speed-module-3", {"speed-module-2", 5})
+	replace_table(data.raw["recipe"]["power-armor-mk2"].ingredients, "effectivity-module-3", {"effectivity-module-2", 5})
+	local power_armor = data.raw["technology"]["power-armor-2"].prerequisites
+	prerequisites(power_armor, "speed-module-3", "speed-module-2")
+	prerequisites(power_armor, "effectivity-module-3", "effectivity-module-2")
+	table.insert(power_armor, "advanced-electronics-2")
+end
+
+local effects = data.raw["technology"]["rocket-silo"].effects --remove the duplicate LDS effect in rocket-silo research
+for _=1, #effects do
+	if effects[_].type == "unlock-recipe" and (effects[_].recipe == "low-density-structure" or effects[_].recipe == "rocket-fuel" or effects[_].recipe == "rocket-control-unit") then
+		effects[_] = nil
+	end
+end
+
+prerequisites(data.raw["technology"]["rocket-silo"].prerequisites, "rocket-speed-5", nil)
+
 --HUGE THANKS to Dimava for the following changes
 --Added options for some changes (for modded users)
 
