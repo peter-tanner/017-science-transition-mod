@@ -17,7 +17,7 @@ for _, mod in pairs(data.raw.module) do
 	end
 end
 
-local function replace_table(table, condition, replace)
+local function recipe_change(table, condition, replace)
 	for _=1, #table do
 		if table[_][1] == condition then
 			table[_] = replace
@@ -36,13 +36,21 @@ local function prerequisites(technology, condition, replace)
 	end
 end
 
-replace_table(data.raw["technology"]["rocket-silo"].unit.ingredients, "military-science-pack", nil)
+local function remove_science(technology, science_pack)
+	for _, ingredient in pairs (technology) do
+		if ingredient[1] == science_pack then
+			table.remove(technology, _)
+		end
+	end
+end
+
+remove_science(data.raw["technology"]["rocket-silo"].unit.ingredients, "military-science-pack")
 
 if settings.startup["017-recipes-changes"].value then
-	replace_table(data.raw["recipe"]["atomic-bomb"].ingredients, "processing-unit", {"rocket-control-unit", 15})
+	recipe_change(data.raw["recipe"]["atomic-bomb"].ingredients, "processing-unit", {"rocket-control-unit", 15})
 	
-	replace_table(data.raw["recipe"]["power-armor-mk2"].ingredients, "speed-module-3", {"speed-module-2", 5})
-	replace_table(data.raw["recipe"]["power-armor-mk2"].ingredients, "effectivity-module-3", {"effectivity-module-2", 5})
+	recipe_change(data.raw["recipe"]["power-armor-mk2"].ingredients, "speed-module-3", {"speed-module-2", 5})
+	recipe_change(data.raw["recipe"]["power-armor-mk2"].ingredients, "effectivity-module-3", {"effectivity-module-2", 5})
 	local power_armor = data.raw["technology"]["power-armor-2"].prerequisites
 	prerequisites(power_armor, "speed-module-3", "speed-module-2")
 	prerequisites(power_armor, "effectivity-module-3", "effectivity-module-2")
