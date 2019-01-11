@@ -121,3 +121,29 @@ data:extend(
 		icon_size = 32
 	}
 })
+--Mining
+if settings.startup["017-axe"].value then
+data:extend(
+{
+	{
+		type = "recipe",
+		name = "017-mine",
+		energy = 0.025,
+		ingredients = {},
+		result = "017-mine",
+		icon = "__base__/graphics/icons/iron-axe.png",
+		icon_size = 32
+	},
+	{
+		type = "item",
+		name = "017-mine",
+		localised_description = {"item-description.mining-tool"},	
+		icon = "__base__/graphics/icons/iron-axe.png",
+		icon_size = 32,
+		flags = {"goes-to-main-inventory"},
+		subgroup = "tool",
+		order = "a[mining]-a[iron-axe]",
+		stack_size = 1
+	}
+})
+end

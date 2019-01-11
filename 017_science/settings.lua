@@ -29,5 +29,17 @@ data:extend(
         name = "017-recipes-changes",
         setting_type = "startup",
         default_value = true
+    },
+    {
+        type = "bool-setting",
+        name = "017-axe",
+        setting_type = "startup",
+        default_value = true
+    },	
+	{
+        type = "bool-setting",
+        name = "017-durability",
+        setting_type = "startup",
+        default_value = true
     }
 })

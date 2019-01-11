@@ -17,6 +17,7 @@ for _, mod in pairs(data.raw.module) do
 	end
 end
 
+--overrides
 local function recipe_change(table, condition, replace)
 	for _=1, #table do
 		if table[_][1] == condition then
@@ -65,6 +66,29 @@ for _=1, #effects do
 end
 
 prerequisites(data.raw["technology"]["rocket-silo"].prerequisites, "rocket-speed-5", nil)
+
+--player equipment changes
+--https://forums.factorio.com/viewtopic.php?t=6059
+if settings.startup["017-durability"].value then
+	for _, axe in pairs(data.raw["mining-tool"]) do
+		axe.durability = math.huge
+	end
+
+	for _, armor in pairs(data.raw["armor"]) do
+		armor.durability = math.huge
+	end
+end
+
+if settings.startup["017-axe"].value then
+	for _, axe in pairs(data.raw["mining-tool"]) do
+		for i, r in pairs(data.raw["recipe"]) do
+			if data.raw["recipe"][i].result == axe.name then
+				data.raw["recipe"][i].hidden = true
+				data.raw["recipe"][i].ingredients = {}
+			end
+		end
+	end
+end
 
 --HUGE THANKS to Dimava for the following changes
 --Added options for some changes (for modded users)
