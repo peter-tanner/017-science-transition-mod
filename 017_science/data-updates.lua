@@ -90,6 +90,82 @@ if settings.startup["017-axe"].value then
 	end
 end
 
+if settings.startup["017-equipment"].value and data.raw["recipe"]["belt-immunity-equipment"] == nil then
+	data:extend({
+		{
+			type = "technology",
+			name = "belt-immunity-equipment",
+			icon_size = 128,
+			icon = "__017_science__/graphics/belt-immunity-equipment.png",
+			prerequisites = {"modular-armor"},
+			effects =
+			{
+				{
+					type = "unlock-recipe",
+					recipe = "belt-immunity-equipment"
+				}
+			},
+			unit =
+			{
+				count = 50,
+				ingredients = {{"science-pack-1", 1}, {"science-pack-2", 1}},
+				time = 15
+			},
+			order = "g-ga"
+		},
+		{
+			type = "recipe",
+			name = "belt-immunity-equipment",
+			enabled = false,
+			energy_required = 10,
+			ingredients =
+			{
+				{"advanced-circuit", 5},
+				{"steel-plate", 10}
+			},
+			result = "belt-immunity-equipment"
+		}
+	})
+end
+
+local lds_recipes = {
+	"energy-shield-mk2-equipment",
+	"battery-mk2-equipment",
+	"fusion-reactor-equipment",
+	"personal-laser-defense-equipment",
+	"discharge-defense-equipment", -- sorry for indirectly nerfing discharge-defense :(
+	"exoskeleton-equipment",
+	"personal-roboport-mk2-equipment",
+	"power-armor-mk2"
+}
+
+if settings.startup["017-lds"].value then
+	local recipe = data.raw["recipe"]
+	for _, r in pairs(recipe) do
+		for _, l in pairs(lds_recipes) do
+			if r.name == l then
+				modified = false
+				for _=1, #r.ingredients do
+					if r.ingredients[_][1] == "steel-plate" then
+						local n = math.ceil(r.ingredients[_][2] / 2)
+						table.remove(r.ingredients, _)
+						r.ingredients[#r.ingredients+1] = {"low-density-structure", n}
+						modified = true
+					end
+				end
+				if modified == false then
+					for _=1, #r.ingredients do
+						if r.ingredients[_][1] == "processing-unit" then
+							local n = math.ceil(r.ingredients[_][2] / settings.startup["017-lds-num"].value)
+							r.ingredients[#r.ingredients+1] = {"low-density-structure", n}
+						end
+					end
+				end
+			end
+		end
+	end
+end
+
 --HUGE THANKS to Dimava for the following changes
 --Added options for some changes (for modded users)
 

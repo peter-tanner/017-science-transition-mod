@@ -107,8 +107,12 @@ if settings.startup["017-axe"].value then
 		if player.cursor_stack.valid_for_read then
 			-- game.print(axe)
 			-- game.print(player.cursor_stack.name)
-			if player.cursor_stack.name == highest_speed[player.force.name][1] then 
-				player.clean_cursor()
+			if highest_speed == nil then
+				ax_gen()
+			else
+				if player.cursor_stack.name == highest_speed[player.force.name][1] then 
+					player.clean_cursor()
+				end
 			end
 		end
 	end)
