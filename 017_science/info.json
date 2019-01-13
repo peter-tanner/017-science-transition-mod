@@ -1,10 +1,10 @@
 {
   "name": "017_science",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "factorio_version": "0.16",
   "title": "0.17 science conversion",
   "author": "npc_strider(morley376)",
-  "contact": "",
+  "contact": "https://mods.factorio.com/mod/017_science/discussion",
   "homepage": "http://steamcommunity.com/id/morley376",
-  "description": "Adds in the new science pack recipes, while keeping 0.16 recipes intact so that the player may update their base at their own pace. Also implements the 0.17 LDS recipe change, science pack names and icons. Does not revamp the tech tree."
+  "description": "Adds in the new science pack recipes, while keeping 0.16 recipes intact so that the player may update their base at their own pace. Implements other 0.17 balance changes: LDS change, transport-belt, mining & smelting speed changes, removal of durability and pickaxe research unlock, and more! Compatible with other big overhaul mods and will support 0.17 on release!"
 }
