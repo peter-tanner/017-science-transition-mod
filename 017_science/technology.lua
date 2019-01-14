@@ -3,7 +3,7 @@ data:extend(
 {
 	{
 		type = "technology",
-		name = "science-pack-2",
+		name = "logistics-science-pack",
 		icon_size = 128,
 		icon = "__017_science__/graphics/technology/green.png",
 		effects =
@@ -26,7 +26,7 @@ data:extend(
 	},
 	{
 		type = "technology",
-		name = "science-pack-3",
+		name = "chemical-science-pack",
 		icon_size = 128,
 		icon = "__017_science__/graphics/technology/blue.png",
 		effects =
@@ -71,7 +71,7 @@ data:extend(
 	},
 	{
 		type = "technology",
-		name = "high-tech-science-pack",
+		name = "utility-science-pack",
 		icon_size = 128,
 		icon = "__017_science__/graphics/technology/yellow.png",
 		effects =

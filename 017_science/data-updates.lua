@@ -115,34 +115,40 @@ if settings.startup["017-techtree"].value then
 	
 	local function compare(technology, science_pack, pre_tier)
 		valid = true
-		for l, j in pairs(technology.unit.ingredients) do
-			if j[1] == pre_tier then
-				valid = true
-				break
-			else
-				valid = false
+		if technology and technology.unit then
+			for l, j in pairs(technology.unit.ingredients) do
+				if j[1] == pre_tier then
+					valid = true
+					break
+				else
+					valid = false
+				end
 			end
 		end
 		if valid == true then
 			if technology.prerequisites then
 				for _=1, #technology.prerequisites do
 					local tech = data.raw["technology"][technology.prerequisites[_]]
-					if tech.unit and valid == true then
-						for i, ingredients in pairs(tech.unit.ingredients) do
-							if ingredients[1] == pre_tier then
-								valid = false
+					if valid == true then
+						if tech then
+							if tech.unit then
+								for i, ingredients in pairs(tech.unit.ingredients) do
+									if ingredients[1] == pre_tier then
+										valid = false
+										break
+									else
+										valid = true
+									end
+								end
+							elseif valid == false then
 								break
-							else
-								valid = true
 							end
 						end
-					elseif valid == false then
-						break
 					end
 				end
 			end
 		end
-		if valid == true and technology.prerequisites then
+		if technology.prerequisites and valid == true then
 			technology.prerequisites[#technology.prerequisites+1] = science_pack
 			return true
 		else
@@ -161,13 +167,13 @@ if settings.startup["017-techtree"].value then
 				end
 			end
 			if whitelisted == true then
-				local valid = compare(tech, "science-pack-2", "science-pack-2")
+				local valid = compare(tech, "logistics-science-pack", "science-pack-2")
 				if valid == false then
-				local valid = compare(tech, "science-pack-3", "science-pack-3") end
+				local valid = compare(tech, "chemical-science-pack", "science-pack-3") end
 				if valid == false then
 				local valid = compare(tech, "production-science-pack", "production-science-pack") end
 				if valid == false then
-				local valid = compare(tech, "high-tech-science-pack", "high-tech-science-pack") end
+				local valid = compare(tech, "utility-science-pack", "high-tech-science-pack") end
 			end
 		end
 	end

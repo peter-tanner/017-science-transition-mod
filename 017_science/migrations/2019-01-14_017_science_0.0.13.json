@@ -1,0 +1,8 @@
+{
+  "technology":
+  [
+    ["science-pack-2", "logistics-science-pack"],
+    ["science-pack-3", "chemical-science-pack"],
+    ["high-tech-science-pack", "utility-science-pack"]
+  ]
+}
