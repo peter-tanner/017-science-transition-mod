@@ -88,7 +88,7 @@ if settings.startup["017-techtree"].value then
 			{"advanced-electronics-2", "high-tech-science-pack"}
 		}
 		
-		data.raw["technology"]["science-pack-3"].effects = {
+		data.raw["technology"]["chemical-science-pack"].effects = {
 				{type = "unlock-recipe", recipe = "science-pack-3"},
 				{type = "unlock-recipe", recipe = "17-chemical-science-pack"}
 		}
@@ -96,7 +96,7 @@ if settings.startup["017-techtree"].value then
 				{type = "unlock-recipe", recipe = "production-science-pack"},
 				{type = "unlock-recipe", recipe = "17-production-science-pack"}
 		}
-		data.raw["technology"]["high-tech-science-pack"].effects = {
+		data.raw["technology"]["utility-science-pack"].effects = {
 				{type = "unlock-recipe", recipe = "high-tech-science-pack"},
 				{type = "unlock-recipe", recipe = "17-utility-science-pack"}
 		}
