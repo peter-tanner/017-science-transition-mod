@@ -143,6 +143,8 @@ if settings.startup["017-techtree"].value then
 							elseif valid == false then
 								break
 							end
+						elseif valid == false then
+							break
 						end
 					end
 				end
@@ -157,25 +159,31 @@ if settings.startup["017-techtree"].value then
 	end
 	
 	for _, tech in pairs(data.raw["technology"]) do
-		if tech.effects then
-			for i=1, #tech.effects do
-				if tech.effects[i].type then
-					if tech.effects[i].type == "unlock-recipe" then
-						whitelisted = true
-						break
-					else
-						whitelisted = false
+		if tech.name ~= ("logistics-science-pack" or "chemical-science-pack" or "production-science-pack" or "utility-science-pack") then
+			if tech.effects then
+				if #tech.effects ~= 0 then
+					for i=1, #tech.effects do
+						if tech.effects[i] then
+							if tech.effects[i].type then
+								if tech.effects[i].type == "unlock-recipe" then
+									whitelisted = true
+									break
+								else
+									whitelisted = false
+								end
+							end
+						end
 					end
 				end
-			end
-			if whitelisted == true then
-				local valid = compare(tech, "logistics-science-pack", "science-pack-2")
-				if valid == false then
-				local valid = compare(tech, "chemical-science-pack", "science-pack-3") end
-				if valid == false then
-				local valid = compare(tech, "production-science-pack", "production-science-pack") end
-				if valid == false then
-				local valid = compare(tech, "utility-science-pack", "high-tech-science-pack") end
+				if whitelisted == true then
+					local valid = compare(tech, "logistics-science-pack", "science-pack-2")
+					if valid == false then
+					local valid = compare(tech, "chemical-science-pack", "science-pack-3") end
+					if valid == false then
+					local valid = compare(tech, "production-science-pack", "production-science-pack") end
+					if valid == false then
+					local valid = compare(tech, "utility-science-pack", "high-tech-science-pack") end
+				end
 			end
 		end
 	end
