@@ -159,11 +159,13 @@ if settings.startup["017-techtree"].value then
 	for _, tech in pairs(data.raw["technology"]) do
 		if tech.effects then
 			for i=1, #tech.effects do
-				if tech.effects[i].type == "unlock-recipe" then
-					whitelisted = true
-					break
-				else
-					whitelisted = false
+				if tech.effects[i].type then
+					if tech.effects[i].type == "unlock-recipe" then
+						whitelisted = true
+						break
+					else
+						whitelisted = false
+					end
 				end
 			end
 			if whitelisted == true then
