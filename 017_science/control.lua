@@ -1,15 +1,21 @@
 
-if settings.startup["017-axe"].value then
-	local function generate_axes()
-		-- game.print("gen_ax")
-		global.axe_techs = {}
-		for _, axe in pairs(game.item_prototypes) do
-			if axe.attack_range then
-				global.axe_techs[#global.axe_techs+1] = {axe.name,axe.speed}
-			end
+local function disable_silo_script()
+	if remote.interfaces["silo_script"] then
+		remote.call("silo_script","set_finish_on_launch", false)
+		remote.call("silo_script","set_show_launched_without_satellite", false)
+	end
+end
+local function generate_axes()
+	-- game.print("gen_ax")
+	global.axe_techs = {}
+	for _, axe in pairs(game.item_prototypes) do
+		if axe.attack_range then
+			global.axe_techs[#global.axe_techs+1] = {axe.name,axe.speed}
 		end
 	end
+end
 
+if settings.startup["017-axe"].value then
 	local function ax_gen()
 		if global.axe_techs == nil then
 			generate_axes()
@@ -75,11 +81,6 @@ if settings.startup["017-axe"].value then
 			give_ax(event)
 		end
 	end
-
-	script.on_init(function()
-			global.axe_techs = {}
-			generate_axes()
-	end)
 
 	-- init_game
 	-- script.on_configuration_changed(function() configuration_changed = 1 game.print("changed") end)
@@ -154,3 +155,106 @@ if settings.startup["017-axe"].value then
 	-- end)
 	
 end
+
+if settings.startup["017-rocket-victory"].value then
+	script.on_event(defines.events.on_rocket_launched, function(event)
+		if game.active_mods["SpaceMod"] then
+		--	game.print("SpaceMod installed: not enabling victory")
+		else
+			game.set_game_state{game_finished = true, player_won = true, can_continue = true}
+		end
+	end)
+end
+
+
+local function initialize()
+	if settings.startup["017-axe"].value then
+		global.axe_techs = {}
+		generate_axes()
+	end
+	if settings.startup["017-rocket-victory"].value then
+		disable_silo_script()
+	end
+end
+
+script.on_configuration_changed(function()
+	initialize()
+	if settings.startup["017-rocket-victory"].value and not settings.startup["017-techtree"].value then
+		for i, force in pairs(game.forces) do
+			if force.technologies["rocket-silo"].researched == true then
+				force.recipes["satellite"].enabled = true
+			end
+		end
+	end
+	if settings.startup["017-rocket-victory"].value and settings.startup["017-techtree"].value then
+		for i, force in pairs(game.forces) do 
+			local get_input_count = force.item_production_statistics.get_input_count
+			if get_input_count("space-science-pack") > 0 then
+				force.recipes["satellite"].enabled = true
+				force.technologies["space-science-pack"].researched = true
+				force.print("force: " .. force.name .. " | space-science-pack tech unlocked | total produced for force: " .. get_input_count("space-science-pack"))
+			else
+				force.recipes["satellite"].enabled = false
+				force.technologies["space-science-pack"].researched = false
+				force.print("No space science produced by this force: keeping technology locked.")
+			end
+		end
+	end
+	if settings.startup["017-techtree"].value then
+		for i, force in pairs(game.forces) do
+			local get_input_count = force.item_production_statistics.get_input_count
+			if get_input_count("science-pack-2") > 0 then
+				force.recipes["science-pack-2"].enabled = true
+				force.technologies["logistics-science-pack"].researched = true
+				force.print("force: " .. force.name .. " | logistics-science-pack tech unlocked | total produced for force: " .. get_input_count("science-pack-2"))
+			else
+				force.recipes["science-pack-2"].enabled = false
+				force.technologies["logistics-science-pack"].researched = false
+				force.print("No logistics science produced by this force: keeping technology locked.")
+			end
+			
+			if get_input_count("science-pack-3") > 0 then
+				force.recipes["science-pack-3"].enabled = true
+				force.recipes["17-chemical-science-pack"].enabled = true
+				force.technologies["chemical-science-pack"].researched = true
+				force.print("force: " .. force.name .. " | chemical-science-pack tech unlocked | total produced for force: " .. get_input_count("science-pack-3"))
+			else
+				force.recipes["science-pack-3"].enabled = false
+				force.recipes["17-chemical-science-pack"].enabled = false
+				force.technologies["chemical-science-pack"].researched = false
+				force.print("No chemical science produced by this force: keeping technology locked.")
+			end
+			
+			if get_input_count("production-science-pack") > 0 then
+				force.recipes["production-science-pack"].enabled = true
+				force.recipes["17-production-science-pack"].enabled = true
+				force.technologies["production-science-pack"].researched = true
+				force.print("force: " .. force.name .. " | production-science-pack tech unlocked | total produced for force: " .. get_input_count("production-science-pack"))
+			else
+				force.recipes["production-science-pack"].enabled = false
+				force.recipes["17-production-science-pack"].enabled = false
+				force.technologies["production-science-pack"].researched = false
+				force.print("No production science produced by this force: keeping technology locked.")				
+			end
+			
+			if get_input_count("high-tech-science-pack") > 0 then
+				force.recipes["high-tech-science-pack"].enabled = true
+				force.recipes["17-utility-science-pack"].enabled = true
+				force.technologies["utility-science-pack"].researched = true
+				force.print("force: " .. force.name .. " | high-tech-science-pack tech unlocked | total produced for force: " .. get_input_count("high-tech-science-pack"))
+			else
+				force.recipes["high-tech-science-pack"].enabled = false
+				force.recipes["17-utility-science-pack"].enabled = false
+				force.technologies["utility-science-pack"].researched = false
+				force.print("No utility science produced by this force: keeping technology locked.")
+			end
+		end
+	end
+	for i, force in pairs(game.forces) do 
+		force.reset_recipes()
+	end
+	for i, force in pairs(game.forces) do 
+		force.reset_technologies()
+	end
+end)
+script.on_init(initialize)

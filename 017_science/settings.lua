@@ -96,6 +96,13 @@ data:extend(
 		order = "npc-m"
     },
 	{
+        type = "bool-setting",
+        name = "017-rocket-victory",
+        setting_type = "startup",
+        default_value = true,
+		order = "npc-me"
+    },
+	{
         type = "int-setting",
         name = "017-green-cost",
         setting_type = "startup",
@@ -129,6 +136,14 @@ data:extend(
     },
 	{
         type = "int-setting",
+        name = "017-nasa-cost",
+        setting_type = "startup",
+		minimum_value = 0,
+        default_value = 5000,
+		order = "npc-ne"
+    },
+	{
+        type = "int-setting",
         name = "017-green-energy",
         setting_type = "startup",
 		minimum_value = 0,
@@ -157,6 +172,14 @@ data:extend(
         setting_type = "startup",
 		minimum_value = 0,
         default_value = 30,
+		order = "npc-od"
+    },
+	{
+        type = "int-setting",
+        name = "017-nasa-energy",
+        setting_type = "startup",
+		minimum_value = 0,
+        default_value = 60,
 		order = "npc-oe"
-    }	
+    }
 })

@@ -91,28 +91,38 @@ data:extend(
 			time = settings.startup["017-gold-energy"].value
 		},
 		order = "e-e-e"
-	}--, (NEXT UPDATE! SPACE SCIENCE + SATELLITE REBALANCING)
-	-- {
-		-- type = "technology",
-		-- name = "space-science-pack",
-		-- icon_size = 128,
-		-- icon = "__017_science__/graphics/technology/white.png",
-		-- effects =
-		-- {
-			-- {type = "unlock-recipe", recipe = "17-utility-science-pack"}
-		-- },
-		-- unit =
-		-- {
-			-- count = 250,
-			-- ingredients =
-			-- {
-				-- {"science-pack-1", 1},
-				-- {"science-pack-2", 1},
-				-- {"science-pack-3", 1},
-			-- },
-			-- time = 15
-		-- },
-		-- order = "a-d-b-a"
-	-- }
+	}
+})
+end
+
+if settings.startup["017-techtree"].value and settings.startup["017-rocket-victory"].value then
+data:extend(
+{
+	{
+		type = "technology",
+		name = "space-science-pack",
+		icon_size = 128,
+		icon = "__017_science__/graphics/technology/white.png",
+		effects =
+		{
+			{type = "unlock-recipe", recipe = "satellite"}
+		},
+		prerequisites = {"rocket-silo"},
+		unit =
+		{
+			count = settings.startup["017-nasa-cost"].value,
+			ingredients =
+			{
+				{"science-pack-1", 1},
+				{"science-pack-2", 1},
+				{"science-pack-3", 1},
+				{"military-science-pack", 1},
+				{"production-science-pack", 1},
+				{"high-tech-science-pack", 1}
+			},
+			time = settings.startup["017-nasa-energy"].value,
+		},
+		order = "k-b"
+	}
 })
 end
