@@ -58,11 +58,13 @@ end
 
 local r_effects = data.raw["technology"]["rocket-silo"].effects --remove the duplicate LDS effect in rocket-silo research
 for _=1, #r_effects do
-	if r_effects[_].type == "unlock-recipe" and (r_effects[_].recipe == "low-density-structure" or r_effects[_].recipe == "rocket-fuel" or r_effects[_].recipe == "rocket-control-unit") then
-		r_effects[_] = nil
-	elseif settings.startup["017-techtree"].value and settings.startup["017-rocket-victory"].value then
-		if r_effects[_].type == "unlock-recipe" and r_effects[_].recipe == "satellite" then
+	if r_effects[_] then
+		if r_effects[_].type == "unlock-recipe" and (r_effects[_].recipe == "low-density-structure" or r_effects[_].recipe == "rocket-fuel" or r_effects[_].recipe == "rocket-control-unit") then
 			r_effects[_] = nil
+		elseif settings.startup["017-techtree"].value and settings.startup["017-rocket-victory"].value then
+			if r_effects[_].type == "unlock-recipe" and r_effects[_].recipe == "satellite" then
+				r_effects[_] = nil
+			end
 		end
 	end
 end
@@ -81,8 +83,46 @@ if settings.startup["017-pack-type-rebalancing"].value then
 	remove_science(data.raw["technology"]["logistic-system"].unit.ingredients, "production-science-pack")
 end
 
-if settings.startup["017-techtree"].value then	
-	prerequisites(data.raw["technology"]["rocket-silo"].prerequisites, "rocket-speed-5", nil)
+if settings.startup["017-techtree"].value then
+	local data_technology = data.raw["technology"]
+	
+	local removing = {
+		{data_technology["oil-processing"].effects, "lubricant"},
+		{data_technology["nuclear-power"].effects, "centrifuge"},
+		{data_technology["nuclear-power"].effects, "uranium-processing"},
+	}
+	for j=1, #removing do
+		local effect_ = removing[j][1]
+		local recipe_ = removing[j][2]
+		for i=1, #effect_ do
+			if effect_[i] then
+				if effect_[i].type == "unlock-recipe" and effect_[i].recipe == recipe_ then
+					effect_[i] = nil
+				end
+			end
+		end
+	end
+	
+	--misc. techtree changes
+	local engine = data_technology["electric-engine"].prerequisites
+	local rocket_silo = data_technology["rocket-silo"].prerequisites
+	local kovarex_process = data_technology["kovarex-enrichment-process"].prerequisites
+	local logistics = data_technology["logistics-3"].prerequisites
+	local fission = data_technology["nuclear-power"]
+	prerequisites(rocket_silo, "rocket-speed-5", nil)
+	prerequisites(engine, "advanced-electronics", nil)
+	engine[#engine+1] = "lubricant"
+	rocket_silo[#rocket_silo+1] = "rocket-fuel"
+	rocket_silo[#rocket_silo+1] = "rocket-control-unit"
+	rocket_silo[#rocket_silo+1] = "low-density-structure"
+	prerequisites(kovarex_process, "nuclear-power", nil)
+	kovarex_process[#kovarex_process+1] = "rocket-fuel"
+	kovarex_process[#kovarex_process+1] = "uranium-enrichment"
+	logistics[#logistics+1] = "lubricant"
+	fission.prerequisites = {"uranium-enrichment"}
+	fission.unit.time = settings.startup["017-nuclear-power-energy"].value
+	fission.unit.count = settings.startup["017-nuclear-power-cost"].value
+	
 	data.raw["recipe"]["science-pack-2"].enabled = false
 	
 	if settings.startup["017-old-science"].value and settings.startup["017-techtree"].value then
@@ -91,22 +131,25 @@ if settings.startup["017-techtree"].value then
 			{"advanced-material-processing-2", "production-science-pack"},
 			{"advanced-electronics-2", "high-tech-science-pack"}
 		}
-		
-		data.raw["technology"]["chemical-science-pack"].effects = {
+		data_technology["chemical-science-pack"].effects = {
 				{type = "unlock-recipe", recipe = "science-pack-3"},
 				{type = "unlock-recipe", recipe = "17-chemical-science-pack"}
 		}
-		data.raw["technology"]["production-science-pack"].effects = {
+		data_technology["production-science-pack"].effects = {
 				{type = "unlock-recipe", recipe = "production-science-pack"},
 				{type = "unlock-recipe", recipe = "17-production-science-pack"}
 		}
-		data.raw["technology"]["utility-science-pack"].effects = {
+		data_technology["utility-science-pack"].effects = {
 				{type = "unlock-recipe", recipe = "high-tech-science-pack"},
 				{type = "unlock-recipe", recipe = "17-utility-science-pack"}
 		}
+		data_technology["low-density-structure"].effects = {
+				{type = "unlock-recipe", recipe = "low-density-structure"},
+				{type = "unlock-recipe", recipe = "17-low-density-structure"}
+		}
 		
 		for i=1, #remove_effect_table do
-			local effects = data.raw["technology"][remove_effect_table[i][1]].effects
+			local effects = data_technology[remove_effect_table[i][1]].effects
 			for _=1, #effects do
 				if effects[_] then
 					if effects[_].type == "unlock-recipe" and effects[_].recipe == remove_effect_table[i][2] then

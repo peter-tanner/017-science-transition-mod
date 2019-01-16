@@ -109,6 +109,7 @@ data:extend(
         default_value = true,
 		order = "npc-mf"
     },
+	--costs
 	{
         type = "int-setting",
         name = "017-green-cost",
@@ -151,6 +152,55 @@ data:extend(
     },
 	{
         type = "int-setting",
+        name = "017-lubricant-cost",
+        setting_type = "startup",
+		minimum_value = 0,
+        default_value = 100,
+		order = "npc-nf"
+    },
+	{
+        type = "int-setting",
+        name = "017-rocket-fuel-cost",
+        setting_type = "startup",
+		minimum_value = 0,
+        default_value = 100,
+		order = "npc-ng"
+    },
+	{
+        type = "int-setting",
+        name = "017-rocket-structure-cost",
+        setting_type = "startup",
+		minimum_value = 0,
+        default_value = 200,
+		order = "npc-nh"
+    },
+	{
+        type = "int-setting",
+        name = "017-rocket-control-cost",
+        setting_type = "startup",
+		minimum_value = 0,
+        default_value = 250,
+		order = "npc-ni"
+    },
+	{
+        type = "int-setting",
+        name = "017-uranium-enrichment-cost",
+        setting_type = "startup",
+		minimum_value = 0,
+        default_value = 500,
+		order = "npc-nj"
+    },
+	{
+        type = "int-setting",
+        name = "017-nuclear-power-cost",
+        setting_type = "startup",
+		minimum_value = 0,
+        default_value = 500,
+		order = "npc-nk"
+    },
+	--energies
+	{
+        type = "int-setting",
         name = "017-green-energy",
         setting_type = "startup",
 		minimum_value = 0,
@@ -188,5 +238,53 @@ data:extend(
 		minimum_value = 0,
         default_value = 60,
 		order = "npc-oe"
+    },
+	{
+        type = "int-setting",
+        name = "017-lubricant-energy",
+        setting_type = "startup",
+		minimum_value = 0,
+        default_value = 30,
+		order = "npc-of"
+    },
+	{
+        type = "int-setting",
+        name = "017-rocket-fuel-energy",
+        setting_type = "startup",
+		minimum_value = 0,
+        default_value = 30,
+		order = "npc-og"
+    },
+	{
+        type = "int-setting",
+        name = "017-rocket-structure-energy",
+        setting_type = "startup",
+		minimum_value = 0,
+        default_value = 30,
+		order = "npc-oh"
+    },
+	{
+        type = "int-setting",
+        name = "017-rocket-control-energy",
+        setting_type = "startup",
+		minimum_value = 0,
+        default_value = 30,
+		order = "npc-oi"
+    },
+	{
+        type = "int-setting",
+        name = "017-uranium-enrichment-energy",
+        setting_type = "startup",
+		minimum_value = 0,
+        default_value = 30,
+		order = "npc-oj"
+    },
+	{
+        type = "int-setting",
+        name = "017-nuclear-power-energy",
+        setting_type = "startup",
+		minimum_value = 0,
+        default_value = 30,
+		order = "npc-ok"
     }
 })

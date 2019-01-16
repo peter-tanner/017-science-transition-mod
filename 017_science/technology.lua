@@ -91,6 +91,121 @@ data:extend(
 			time = settings.startup["017-gold-energy"].value
 		},
 		order = "e-e-e"
+	},
+	{
+		type = "technology",
+		name = "lubricant",
+		icon_size = 128,
+		icon = "__017_science__/graphics/technology/lubricant.png",
+		effects =
+		{
+			{type = "unlock-recipe", recipe = "lubricant"}
+		},
+		prerequisites = {"oil-processing"},
+		unit =
+		{
+			count = settings.startup["017-lubricant-cost"].value,
+			ingredients =
+			{
+				{"science-pack-1", 1},
+				{"science-pack-2", 1},
+			},
+			time = settings.startup["017-lubricant-energy"].value
+		},
+		order = "d-a-a"
+	},
+	{
+		type = "technology",
+		name = "rocket-fuel",
+		icon_size = 128,
+		icon = "__017_science__/graphics/technology/rocketfuel.png",
+		effects =
+		{
+			{type = "unlock-recipe", recipe = "rocket-fuel"}
+		},
+		prerequisites = {"engine", "flammables"},
+		unit =
+		{
+			count = settings.startup["017-rocket-fuel-cost"].value,
+			ingredients =
+			{
+				{"science-pack-1", 1},
+				{"science-pack-2", 1},
+			},
+			time = settings.startup["017-rocket-fuel-energy"].value
+		},
+		order = "d-a-b"
+	},
+	{
+		type = "technology",
+		name = "low-density-structure",
+		icon_size = 128,
+		icon = "__017_science__/graphics/technology/rocketstructure.png",
+		effects =
+		{
+			{type = "unlock-recipe", recipe = "17-low-density-structure"}
+		},
+		prerequisites = {"advanced-material-processing"},
+		unit =
+		{
+			count = settings.startup["017-rocket-structure-cost"].value,
+			ingredients =
+			{
+				{"science-pack-1", 1},
+				{"science-pack-2", 1},
+				{"science-pack-3", 1},
+			},
+			time = settings.startup["017-rocket-structure-energy"].value
+		},
+		order = "e-e-e"
+	},
+	{
+		type = "technology",
+		name = "rocket-control-unit",
+		icon_size = 128,
+		icon = "__017_science__/graphics/technology/rocketcontrols.png",
+		effects =
+		{
+			{type = "unlock-recipe", recipe = "rocket-control-unit"}
+		},
+		prerequisites = {"speed-module"},
+		unit =
+		{
+			count = settings.startup["017-rocket-control-cost"].value,
+			ingredients =
+			{
+				{"science-pack-1", 1},
+				{"science-pack-2", 1},
+				{"science-pack-3", 1},
+				{"high-tech-science-pack", 1},
+			},
+			time = settings.startup["017-rocket-control-energy"].value
+		},
+		order = "e-e-e"
+	},
+	{
+		type = "technology",
+		name = "uranium-enrichment",
+		icon_size = 128,
+		icon = "__017_science__/graphics/technology/uraniumenrichment.png",
+		effects =
+		{
+			{type = "unlock-recipe", recipe = "centrifuge"},
+			{type = "unlock-recipe", recipe = "uranium-processing"}
+		},
+		prerequisites = data.raw["technology"]["nuclear-power"].prerequisites,
+		unit =
+		{
+			count = settings.startup["017-uranium-enrichment-cost"].value,
+			ingredients =
+			{
+				{"science-pack-1", 1},
+				{"science-pack-2", 1},
+				{"science-pack-3", 1},
+			},
+			time = settings.startup["017-uranium-enrichment-energy"].value
+		},
+		order = "e-e-e"
 	}
 })
 end
