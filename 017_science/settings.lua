@@ -103,6 +103,13 @@ data:extend(
 		order = "npc-me"
     },
 	{
+        type = "bool-setting",
+        name = "017-tank-gun-nerf",
+        setting_type = "startup",
+        default_value = true,
+		order = "npc-mf"
+    },
+	{
         type = "int-setting",
         name = "017-green-cost",
         setting_type = "startup",

@@ -309,6 +309,10 @@ if settings.startup["017-lds"].value then
 	end
 end
 
+if settings.startup["017-tank-gun-nerf"].value then
+	data.raw["gun"]["tank-machine-gun"].attack_parameters.damage_modifier = 1
+end
+
 --HUGE THANKS to Dimava for the following changes
 --Added options for some changes (for modded users)
 
