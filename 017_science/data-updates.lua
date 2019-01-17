@@ -127,9 +127,15 @@ if settings.startup["017-techtree"].value then
 	
 	if settings.startup["017-old-science"].value and settings.startup["017-techtree"].value then
 		remove_effect_table = {
+			{"military-2", "military-science-pack	"},
 			{"advanced-electronics", "science-pack-3"},
 			{"advanced-material-processing-2", "production-science-pack"},
 			{"advanced-electronics-2", "high-tech-science-pack"}
+		}
+		
+		data_technology["military-science-pack"].effects = {
+				{type = "unlock-recipe", recipe = "military-science-pack"},
+				{type = "unlock-recipe", recipe = "17-military-science-pack"}
 		}
 		data_technology["chemical-science-pack"].effects = {
 				{type = "unlock-recipe", recipe = "science-pack-3"},
@@ -244,6 +250,8 @@ if settings.startup["017-techtree"].value then
 						local valid = compare(tech, "chemical-science-pack", "science-pack-3") end
 					if valid == false then
 						local valid = compare(tech, "production-science-pack", "production-science-pack") end
+					if valid == false then
+						local valid = compare(tech, "military-science-pack", "military-science-pack") end
 					if valid == false then
 						compare(tech, "utility-science-pack", "high-tech-science-pack")
 					end

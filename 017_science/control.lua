@@ -204,6 +204,16 @@ script.on_configuration_changed(function()
 				f_print("oil-processing not researched: lubricant recipe not auto-unlocking")
 			end	
 
+			if f_technologies["military-2"].researched == true then
+				f_recipes["17-military-science-pack"].enabled = true
+				if old_science then
+					f_recipes["military-science-pack"].enabled = true
+				end				
+				f_print("military-2 researched for this force: military-science-pack recipe auto-unlocked")
+			else
+				f_print("military-2 not researched: military-science-pack recipe not auto-unlocking")
+			end
+			
 			if f_technologies["advanced-electronics"].researched == true then
 				f_recipes["17-chemical-science-pack"].enabled = true
 				if old_science then
@@ -254,7 +264,7 @@ script.on_configuration_changed(function()
 				if (get_input_count("satellite") > 0) or (get_input_count("space-science-pack") > 0) then
 					force.recipes["satellite"].enabled = true
 					force.technologies["space-science-pack"].researched = true
-					force.print("force: " .. force.name .. " | satellite recipe unlocked | total produced for force: " .. get_input_count("satellite"))
+					force.print("force: " .. force.name .. " | satellite recipe unlocked | total produced by force: " .. get_input_count("satellite"))
 				else
 					force.recipes["satellite"].enabled = false
 					force.technologies["space-science-pack"].researched = false
@@ -277,11 +287,25 @@ script.on_configuration_changed(function()
 				if get_input_count("science-pack-2") > 0 then
 					f_recipes["science-pack-2"].enabled = true
 					f_technologies["logistics-science-pack"].researched = true
-					f_print("force: " .. force.name .. " | logistics-science-pack recipe unlocked | total produced for force: " .. get_input_count("science-pack-2"))
+					f_print("force: " .. force.name .. " | logistics-science-pack recipe unlocked | total produced by force: " .. get_input_count("science-pack-2"))
 				else
 					f_recipes["science-pack-2"].enabled = false
 					f_technologies["logistics-science-pack"].researched = false
 					f_print("No logistics science produced by this force: technology won't be auto-researched.")
+				end
+			end			
+			
+			if not f_technologies["military-science-pack"].researched == true then
+				if get_input_count("military-science-pack") > 0 then
+					f_recipes["military-science-pack"].enabled = true
+					f_recipes["17-military-science-pack"].enabled = true
+					f_technologies["military-science-pack"].researched = true
+					f_print("force: " .. force.name .. " | military-science-pack recipe unlocked | total produced by force: " .. get_input_count("military-science-pack"))
+				else
+					f_recipes["military-science-pack"].enabled = false
+					f_recipes["17-military-science-pack"].enabled = false
+					f_technologies["military-science-pack"].researched = false
+					f_print("No military science produced by this force: technology won't be auto-researched.")
 				end
 			end
 			
@@ -290,7 +314,7 @@ script.on_configuration_changed(function()
 					f_recipes["science-pack-3"].enabled = true
 					f_recipes["17-chemical-science-pack"].enabled = true
 					f_technologies["chemical-science-pack"].researched = true
-					f_print("force: " .. force.name .. " | chemical-science-pack recipe unlocked | total produced for force: " .. get_input_count("science-pack-3"))
+					f_print("force: " .. force.name .. " | chemical-science-pack recipe unlocked | total produced by force: " .. get_input_count("science-pack-3"))
 				else
 					f_recipes["science-pack-3"].enabled = false
 					f_recipes["17-chemical-science-pack"].enabled = false
@@ -304,7 +328,7 @@ script.on_configuration_changed(function()
 					f_recipes["production-science-pack"].enabled = true
 					f_recipes["17-production-science-pack"].enabled = true
 					f_technologies["production-science-pack"].researched = true
-					f_print("force: " .. force.name .. " | production-science-pack recipe unlocked | total produced for force: " .. get_input_count("production-science-pack"))
+					f_print("force: " .. force.name .. " | production-science-pack recipe unlocked | total produced by force: " .. get_input_count("production-science-pack"))
 				else
 					f_recipes["production-science-pack"].enabled = false
 					f_recipes["17-production-science-pack"].enabled = false
@@ -318,7 +342,7 @@ script.on_configuration_changed(function()
 					f_recipes["high-tech-science-pack"].enabled = true
 					f_recipes["17-utility-science-pack"].enabled = true
 					f_technologies["utility-science-pack"].researched = true
-					f_print("force: " .. force.name .. " | high-tech-science-pack recipe unlocked | total produced for force: " .. get_input_count("high-tech-science-pack"))
+					f_print("force: " .. force.name .. " | high-tech-science-pack recipe unlocked | total produced by force: " .. get_input_count("high-tech-science-pack"))
 				else
 					f_recipes["high-tech-science-pack"].enabled = false
 					f_recipes["17-utility-science-pack"].enabled = false
@@ -331,7 +355,7 @@ script.on_configuration_changed(function()
 				if get_fluid_input_count("lubricant") > 0 then
 					f_recipes["lubricant"].enabled = true
 					f_technologies["lubricant"].researched = true
-					f_print("force: " .. force.name .. " | lubricant recipe unlocked | total produced for force: " .. get_fluid_input_count("lubricant"))
+					f_print("force: " .. force.name .. " | lubricant recipe unlocked | total produced by force: " .. get_fluid_input_count("lubricant"))
 				else
 					f_recipes["lubricant"].enabled = false
 					f_technologies["lubricant"].researched = false
@@ -343,7 +367,7 @@ script.on_configuration_changed(function()
 				if get_input_count("rocket-fuel") > 0 then
 					f_recipes["rocket-fuel"].enabled = true
 					f_technologies["rocket-fuel"].researched = true
-					f_print("force: " .. force.name .. " | rocket-fuel recipe unlocked | total produced for force: " .. get_input_count("rocket-fuel"))
+					f_print("force: " .. force.name .. " | rocket-fuel recipe unlocked | total produced by force: " .. get_input_count("rocket-fuel"))
 				else
 					f_recipes["rocket-fuel"].enabled = false
 					f_technologies["rocket-fuel"].researched = false
@@ -356,7 +380,7 @@ script.on_configuration_changed(function()
 					f_recipes["low-density-structure"].enabled = true
 					f_recipes["17-low-density-structure"].enabled = true
 					f_technologies["low-density-structure"].researched = true
-					f_print("force: " .. force.name .. " | low-density-structure recipe unlocked | total produced for force: " .. get_input_count("low-density-structure"))
+					f_print("force: " .. force.name .. " | low-density-structure recipe unlocked | total produced by force: " .. get_input_count("low-density-structure"))
 				else
 					f_recipes["low-density-structure"].enabled = false
 					f_recipes["17-low-density-structure"].enabled = false
@@ -369,7 +393,7 @@ script.on_configuration_changed(function()
 				if get_input_count("rocket-control-unit") > 0 then
 					f_recipes["rocket-control-unit"].enabled = true
 					f_technologies["rocket-control-unit"].researched = true
-					f_print("force: " .. force.name .. " | rocket-control-unit recipe unlocked | total produced for force: " .. get_input_count("rocket-control-unit"))
+					f_print("force: " .. force.name .. " | rocket-control-unit recipe unlocked | total produced by force: " .. get_input_count("rocket-control-unit"))
 				else
 					f_recipes["rocket-control-unit"].enabled = false
 					f_technologies["rocket-control-unit"].researched = false

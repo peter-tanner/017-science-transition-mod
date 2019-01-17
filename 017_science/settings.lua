@@ -120,6 +120,14 @@ data:extend(
     },
 	{
         type = "int-setting",
+        name = "017-military-cost",
+        setting_type = "startup",
+		minimum_value = 0,
+        default_value = 100,
+		order = "npc-nab"
+    },
+	{
+        type = "int-setting",
         name = "017-chem-cost",
         setting_type = "startup",
 		minimum_value = 0,
@@ -206,6 +214,14 @@ data:extend(
 		minimum_value = 0,
         default_value = 5,
 		order = "npc-oa"
+    },
+	{
+        type = "int-setting",
+        name = "017-military-energy",
+        setting_type = "startup",
+		minimum_value = 0,
+        default_value = 15,
+		order = "npc-oab"
     },
 	{
         type = "int-setting",

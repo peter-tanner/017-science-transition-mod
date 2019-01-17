@@ -26,6 +26,31 @@ data:extend(
 	},
 	{
 		type = "technology",
+		name = "military-science-pack",
+		icon_size = 128,
+		icon = "__017_science__/graphics/technology/gray.png",
+		effects =
+		{
+			{
+				type = "unlock-recipe",
+				recipe = "17-military-science-pack"
+			}
+		},
+		prerequisites = {"military-2", "stone-walls"},
+		unit =
+		{
+			count = settings.startup["017-military-cost"].value,
+			ingredients =
+			{
+				{"science-pack-1", 1},
+				{"science-pack-2", 1},
+			},
+			time = settings.startup["017-military-energy"].value
+		},
+		order = "e-a-b-a"
+	},
+	{
+		type = "technology",
 		name = "chemical-science-pack",
 		icon_size = 128,
 		icon = "__017_science__/graphics/technology/blue.png",
