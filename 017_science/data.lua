@@ -32,8 +32,10 @@ if not settings.startup["017-old-science"].value then
 	hide("production-science-pack", "advanced-material-processing-2")
 	hide("high-tech-science-pack", "advanced-electronics-2")
 	
-	data.raw["recipe"]["low-density-structure"].normal.hidden = true
-	data.raw["recipe"]["low-density-structure"].expensive.hidden = true	
+	if not mods["bobrevamp"] then
+		data.raw["recipe"]["low-density-structure"].normal.hidden = true
+		data.raw["recipe"]["low-density-structure"].expensive.hidden = true
+	end
 elseif settings.startup["017-old-science"].value then
 	data.raw["recipe"]["science-pack-3"].hidden = false
 	data.raw["recipe"]["military-science-pack"].hidden = false

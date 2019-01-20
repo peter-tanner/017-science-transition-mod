@@ -141,51 +141,6 @@ data:extend(
 	},
 	{
 		type = "technology",
-		name = "rocket-fuel",
-		icon_size = 128,
-		icon = "__017_science__/graphics/technology/rocketfuel.png",
-		effects =
-		{
-			{type = "unlock-recipe", recipe = "rocket-fuel"}
-		},
-		prerequisites = {"engine", "flammables"},
-		unit =
-		{
-			count = settings.startup["017-rocket-fuel-cost"].value,
-			ingredients =
-			{
-				{"science-pack-1", 1},
-				{"science-pack-2", 1},
-			},
-			time = settings.startup["017-rocket-fuel-energy"].value
-		},
-		order = "d-a-b"
-	},
-	{
-		type = "technology",
-		name = "low-density-structure",
-		icon_size = 128,
-		icon = "__017_science__/graphics/technology/rocketstructure.png",
-		effects =
-		{
-			{type = "unlock-recipe", recipe = "17-low-density-structure"}
-		},
-		prerequisites = {"advanced-material-processing"},
-		unit =
-		{
-			count = settings.startup["017-rocket-structure-cost"].value,
-			ingredients =
-			{
-				{"science-pack-1", 1},
-				{"science-pack-2", 1},
-				{"science-pack-3", 1},
-			},
-			time = settings.startup["017-rocket-structure-energy"].value
-		},
-		order = "e-e-e"
-	},
-	{
-		type = "technology",
 		name = "rocket-control-unit",
 		icon_size = 128,
 		icon = "__017_science__/graphics/technology/rocketcontrols.png",
@@ -229,6 +184,63 @@ data:extend(
 				{"science-pack-3", 1},
 			},
 			time = settings.startup["017-uranium-enrichment-energy"].value
+		},
+		order = "e-e-e"
+	}
+})
+end
+
+if not mods["angelspetrochem"] and settings.startup["017-techtree"].value then
+data:extend(
+{
+	{
+		type = "technology",
+		name = "rocket-fuel",
+		icon_size = 128,
+		icon = "__017_science__/graphics/technology/rocketfuel.png",
+		effects =
+		{
+			{type = "unlock-recipe", recipe = "rocket-fuel"}
+		},
+		prerequisites = {"engine", "flammables"},
+		unit =
+		{
+			count = settings.startup["017-rocket-fuel-cost"].value,
+			ingredients =
+			{
+				{"science-pack-1", 1},
+				{"science-pack-2", 1},
+			},
+			time = settings.startup["017-rocket-fuel-energy"].value
+		},
+		order = "d-a-b"
+	}
+})
+end
+
+if not mods["bobrevamp"] and settings.startup["017-techtree"].value then
+data:extend(
+{
+	{
+		type = "technology",
+		name = "low-density-structure",
+		icon_size = 128,
+		icon = "__017_science__/graphics/technology/rocketstructure.png",
+		effects =
+		{
+			{type = "unlock-recipe", recipe = "17-low-density-structure"}
+		},
+		prerequisites = {"advanced-material-processing"},
+		unit =
+		{
+			count = settings.startup["017-rocket-structure-cost"].value,
+			ingredients =
+			{
+				{"science-pack-1", 1},
+				{"science-pack-2", 1},
+				{"science-pack-3", 1},
+			},
+			time = settings.startup["017-rocket-structure-energy"].value
 		},
 		order = "e-e-e"
 	}

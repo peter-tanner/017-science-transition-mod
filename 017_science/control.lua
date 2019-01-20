@@ -158,7 +158,7 @@ end
 
 if settings.startup["017-rocket-victory"].value then
 	script.on_event(defines.events.on_rocket_launched, function(event)
-		if game.active_mods["SpaceMod"] then
+		if game.active_game.active_mods["SpaceMod"] then
 		--	game.print("SpaceMod installed: not enabling victory")
 		else
 			game.set_game_state{game_finished = true, player_won = true, can_continue = true}
@@ -237,7 +237,9 @@ script.on_configuration_changed(function()
 				f_recipes["17-low-density-structure"].enabled = true
 				f_recipes["17-utility-science-pack"].enabled = true
 				if old_science then
-					f_recipes["low-density-structure"].enabled = true
+					if not game.active_mods["bobrevamp"] then
+						f_recipes["low-density-structure"].enabled = true
+					end
 					f_recipes["high-tech-science-pack"].enabled = true
 				end
 				f_print("advanced-electronics-2 researched for this force: utility-science-pack & low-density-structure & rocket-control-unit recipes auto-unlocked")
@@ -246,7 +248,9 @@ script.on_configuration_changed(function()
 			end
 			
 			if f_technologies["advanced-material-processing-2"].researched == true then
-				f_recipes["rocket-fuel"].enabled = true
+				if not game.active_mods["angelspetrochem"] then
+					f_recipes["rocket-fuel"].enabled = true
+				end
 				f_recipes["17-production-science-pack"].enabled = true
 				if old_science then
 					f_recipes["production-science-pack"].enabled = true
@@ -363,7 +367,7 @@ script.on_configuration_changed(function()
 				end			
 			end	
 
-			if not f_technologies["rocket-fuel"].researched == true then
+			if not f_technologies["rocket-fuel"].researched == true and not game.active_mods["angelspetrochem"] then
 				if get_input_count("rocket-fuel") > 0 then
 					f_recipes["rocket-fuel"].enabled = true
 					f_technologies["rocket-fuel"].researched = true
@@ -372,10 +376,24 @@ script.on_configuration_changed(function()
 					f_recipes["rocket-fuel"].enabled = false
 					f_technologies["rocket-fuel"].researched = false
 					f_print("No rocket-fuel produced by this force: technology won't be auto-researched.")
-				end			
-			end			
+				end
+			elseif game.active_mods["angelspetrochem"] then
+				if get_input_count("rocket-fuel") > 0 then
+					f_technologies["angels-rocket-fuel"].researched = true
+					f_recipes["rocket-oxidizer-capsule"].enabled = true
+					f_recipes["rocket-fuel-capsule"].enabled = true
+					f_recipes["rocket-fuel"].enabled = true
+					f_print("force: " .. force.name .. " | rocket-fuel recipe unlocked | total produced by force: " .. get_input_count("rocket-fuel"))
+				else
+					f_technologies["angels-rocket-fuel"].researched = false
+					f_recipes["rocket-oxidizer-capsule"].enabled = false
+					f_recipes["rocket-fuel-capsule"].enabled = false
+					f_recipes["rocket-fuel"].enabled = false
+					f_print("No rocket-fuel produced by this force: technology won't be auto-researched.")
+				end
+			end
 			
-			if not f_technologies["low-density-structure"].researched == true then
+			if not f_technologies["low-density-structure"].researched == true and not game.active_mods["bobrevamp"] then
 				if get_input_count("low-density-structure") > 0 then
 					f_recipes["low-density-structure"].enabled = true
 					f_recipes["17-low-density-structure"].enabled = true
@@ -384,6 +402,16 @@ script.on_configuration_changed(function()
 				else
 					f_recipes["low-density-structure"].enabled = false
 					f_recipes["17-low-density-structure"].enabled = false
+					f_technologies["low-density-structure"].researched = false
+					f_print("No low-density-structure produced by this force: technology won't be auto-researched.")
+				end
+			elseif game.active_mods["bobrevamp"] then
+				if get_input_count("low-density-structure") > 0 then
+					f_recipes["low-density-structure"].enabled = true
+					f_technologies["low-density-structure"].researched = true
+					f_print("force: " .. force.name .. " | low-density-structure recipe unlocked | total produced by force: " .. get_input_count("low-density-structure"))
+				else
+					f_recipes["low-density-structure"].enabled = false
 					f_technologies["low-density-structure"].researched = false
 					f_print("No low-density-structure produced by this force: technology won't be auto-researched.")
 				end

@@ -47,7 +47,6 @@ end
 
 if settings.startup["017-recipes-changes"].value then
 	recipe_change(data.raw["recipe"]["atomic-bomb"].ingredients, "processing-unit", {"rocket-control-unit", 15})
-	
 	recipe_change(data.raw["recipe"]["power-armor-mk2"].ingredients, "speed-module-3", {"speed-module-2", 5})
 	recipe_change(data.raw["recipe"]["power-armor-mk2"].ingredients, "effectivity-module-3", {"effectivity-module-2", 5})
 	local power_armor = data.raw["technology"]["power-armor-2"].prerequisites
@@ -73,14 +72,20 @@ data.raw["technology"]["nuclear-fuel-reprocessing"].unit.count = (1500-settings.
 
 if settings.startup["017-pack-type-rebalancing"].value then
 	remove_science(data.raw["technology"]["rocket-silo"].unit.ingredients, "military-science-pack")
-	remove_science(data.raw["technology"]["kovarex-enrichment-process"].unit.ingredients, "high-tech-science-pack")
-	remove_science(data.raw["technology"]["speed-module-3"].unit.ingredients, "high-tech-science-pack")
-	table.insert(data.raw["technology"]["speed-module-3"].unit.ingredients, {"production-science-pack", 1})
-	remove_science(data.raw["technology"]["effectivity-module-3"].unit.ingredients, "high-tech-science-pack")
-	table.insert(data.raw["technology"]["effectivity-module-3"].unit.ingredients, {"production-science-pack", 1})
-	remove_science(data.raw["technology"]["effect-transmission"].unit.ingredients, "high-tech-science-pack")
-	table.insert(data.raw["technology"]["effect-transmission"].unit.ingredients, {"production-science-pack", 1})
-	remove_science(data.raw["technology"]["logistic-system"].unit.ingredients, "production-science-pack")
+	if not mods["Nuclear Fuel"] then
+		remove_science(data.raw["technology"]["kovarex-enrichment-process"].unit.ingredients, "high-tech-science-pack")
+	end
+	if not mods["bobmodules"] then
+		remove_science(data.raw["technology"]["speed-module-3"].unit.ingredients, "high-tech-science-pack")
+		table.insert(data.raw["technology"]["speed-module-3"].unit.ingredients, {"production-science-pack", 1})
+		remove_science(data.raw["technology"]["effectivity-module-3"].unit.ingredients, "high-tech-science-pack")
+		table.insert(data.raw["technology"]["effectivity-module-3"].unit.ingredients, {"production-science-pack", 1})
+		remove_science(data.raw["technology"]["effect-transmission"].unit.ingredients, "high-tech-science-pack")
+		table.insert(data.raw["technology"]["effect-transmission"].unit.ingredients, {"production-science-pack", 1})
+	end
+	if not mods["bobslogistics"] then
+		remove_science(data.raw["technology"]["logistic-system"].unit.ingredients, "production-science-pack")
+	end
 end
 
 if settings.startup["017-techtree"].value then
@@ -127,7 +132,7 @@ if settings.startup["017-techtree"].value then
 	
 	if settings.startup["017-old-science"].value and settings.startup["017-techtree"].value then
 		remove_effect_table = {
-			{"military-2", "military-science-pack	"},
+			{"military-2", "military-science-pack"},
 			{"advanced-electronics", "science-pack-3"},
 			{"advanced-material-processing-2", "production-science-pack"},
 			{"advanced-electronics-2", "high-tech-science-pack"}
@@ -149,10 +154,12 @@ if settings.startup["017-techtree"].value then
 				{type = "unlock-recipe", recipe = "high-tech-science-pack"},
 				{type = "unlock-recipe", recipe = "17-utility-science-pack"}
 		}
-		data_technology["low-density-structure"].effects = {
-				{type = "unlock-recipe", recipe = "low-density-structure"},
-				{type = "unlock-recipe", recipe = "17-low-density-structure"}
-		}
+		if not mods["bobrevamp"] then
+			data_technology["low-density-structure"].effects = {
+					{type = "unlock-recipe", recipe = "low-density-structure"},
+					{type = "unlock-recipe", recipe = "17-low-density-structure"}
+			}
+		end
 		
 		for i=1, #remove_effect_table do
 			local effects = data_technology[remove_effect_table[i][1]].effects
@@ -164,100 +171,12 @@ if settings.startup["017-techtree"].value then
 				end
 			end
 		end
-	end	
-	
-	local function compare(technology, science_pack, pre_tier)
-		valid = true
-		if technology and technology.unit then
-			for l, j in pairs(technology.unit.ingredients) do
-				if j[1] == pre_tier then
-					valid = true
-					break
-				else
-					valid = false
-				end
-			end
-		end
-		if valid == true then
-			if technology.prerequisites then
-				for _=1, #technology.prerequisites do
-					local tech = data.raw["technology"][technology.prerequisites[_]]
-					if valid == true then
-						if tech then
-							if tech.unit then
-								for i, ingredients in pairs(tech.unit.ingredients) do
-									if ingredients[1] == pre_tier then
-										valid = false
-										break
-									else
-										valid = true
-									end
-								end
-							elseif valid == false then
-								break
-							end
-						elseif valid == false then
-							break
-						end
-					end
-				end
-			end
-		end
-		if technology.prerequisites and valid == true then
-			technology.prerequisites[#technology.prerequisites+1] = science_pack
-			return true
-		else
-			return false
-		end
 	end
-	
-	for _, tech in pairs(data.raw["technology"]) do
-		if tech.name ~= ("logistics-science-pack" or "chemical-science-pack" or "production-science-pack" or "utility-science-pack" or "space-science-pack") then
-			if tech.effects then
-				if #tech.effects ~= 0 then
-					for i, effect in pairs(tech.effects) do
-						if effect then
-							if effect.type then
-								if effect.type == "unlock-recipe" then
-									whitelisted = true
-									break
-								else
-									whitelisted = false
-								end
-							end
-						end
-					end
-				end
-				if settings.startup["017-rocket-victory"].value then
-					if whitelisted == false then
-						if tech.unit then
-							if tech.unit.ingredients then
-								for j, nasa in pairs(tech.unit.ingredients) do
-									if nasa[1] == "space-science-pack" then
-										compare(tech, "space-science-pack", "space-science-pack")
-										break
-									else
-										whitelisted = false
-									end
-								end
-							end
-						end
-					end
-				end
-				if whitelisted == true then
-					local valid = compare(tech, "logistics-science-pack", "science-pack-2")
-					if valid == false then
-						local valid = compare(tech, "chemical-science-pack", "science-pack-3") end
-					if valid == false then
-						local valid = compare(tech, "production-science-pack", "production-science-pack") end
-					if valid == false then
-						local valid = compare(tech, "military-science-pack", "military-science-pack") end
-					if valid == false then
-						compare(tech, "utility-science-pack", "high-tech-science-pack")
-					end
-				end
-			end
-		end
+	if mods["bobrevamp"] then
+		data_technology["low-density-structure"].effects = {
+			{type = "unlock-recipe", recipe = "low-density-structure"},
+		--	{type = "unlock-recipe", recipe = "17-low-density-structure"}
+		}
 	end
 end
 
