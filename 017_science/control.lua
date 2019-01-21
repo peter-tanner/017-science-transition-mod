@@ -158,7 +158,7 @@ end
 
 if settings.startup["017-rocket-victory"].value then
 	script.on_event(defines.events.on_rocket_launched, function(event)
-		if game.active_game.active_mods["SpaceMod"] then
+		if game.active_mods["SpaceMod"] then
 		--	game.print("SpaceMod installed: not enabling victory")
 		else
 			game.set_game_state{game_finished = true, player_won = true, can_continue = true}
