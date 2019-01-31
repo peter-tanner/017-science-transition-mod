@@ -123,6 +123,7 @@ if settings.startup["017-techtree"].value then
 	prerequisites(kovarex_process, "nuclear-power", nil)
 	kovarex_process[#kovarex_process+1] = "rocket-fuel"
 	kovarex_process[#kovarex_process+1] = "uranium-enrichment"
+	prerequisites(logistics, "automation-3", nil)
 	logistics[#logistics+1] = "lubricant"
 	fission.prerequisites = {"uranium-enrichment"}
 	fission.unit.time = settings.startup["017-nuclear-power-energy"].value
@@ -281,6 +282,15 @@ end
 
 if settings.startup["017-tank-gun-nerf"].value then
 	data.raw["gun"]["tank-machine-gun"].attack_parameters.damage_modifier = 1
+end
+
+if settings.startup["017-ore-icons"].value then
+	local item = data.raw["item"]
+	item["coal"].icon="__base__/graphics/icons/icons-new/coal.png"
+	item["copper-ore"].icon="__base__/graphics/icons/icons-new/copper-ore.png"
+	item["iron-ore"].icon="__base__/graphics/icons/icons-new/iron-ore.png"
+	item["stone"].icon="__base__/graphics/icons/icons-new/stone.png"
+	item["uranium-ore"].icon="__base__/graphics/icons/icons-new/uranium-ore.png"
 end
 
 --HUGE THANKS to Dimava for the following changes

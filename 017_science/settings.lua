@@ -302,5 +302,12 @@ data:extend(
 		minimum_value = 0,
         default_value = 30,
 		order = "npc-ok"
+    },
+	{
+        type = "bool-setting",
+        name = "017-ore-icons",
+        setting_type = "startup",
+        default_value = true,
+		order = "npc-zz"
     }
 })
