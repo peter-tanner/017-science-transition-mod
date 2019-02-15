@@ -312,6 +312,11 @@ for _, belt in pairs(data.raw["underground-belt"]) do
 		belt.speed = belt.speed * 45 / 40;
 	end
 end
+for _, belt in pairs(data.raw["loader"]) do
+	if (belt.speed * 32) % 1 == 0 and belt.speed * 32 < 8 then
+		belt.speed = belt.speed * 45 / 40;
+	end
+end
 
 if settings.startup["017-drill"].value then
 	--simplify drill stats
