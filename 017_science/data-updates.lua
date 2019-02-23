@@ -194,13 +194,58 @@ if settings.startup["017-durability"].value then
 end
 
 if settings.startup["017-axe"].value then
+	local function fake_axe(item, recipe)
+		local name = item.name .. "-item"
+		return{
+			{
+				type = "item",
+				name = name,
+				localised_name = {"item-name." .. item.name},
+				localised_description = {"item-description.fake-mining-tool"},
+				icon = item.icon,
+				icon_size = item.icon_size,
+				flags = {"goes-to-main-inventory"},
+				subgroup = "tool",
+				order = item.order,
+				stack_size = item.stack_size
+			},
+			{
+				type = "recipe",
+				name = name,
+				ingredients = recipe.ingredients,
+				result = name
+			}
+		}
+	end
+	local axe_item = {}
+	local axe_recipe = {}
+	local axe_recipe_consumers = {}
 	for _, axe in pairs(data.raw["mining-tool"]) do
-		for i, r in pairs(data.raw["recipe"]) do
-			if data.raw["recipe"][i].result == axe.name then
-				data.raw["recipe"][i].hidden = true
-				data.raw["recipe"][i].ingredients = {}
+		local axe_name = axe.name
+		axe_item[axe_name] = axe
+		for i, recipe in pairs(data.raw["recipe"]) do
+			if recipe.ingredients then
+				for j, ingredients in pairs(recipe.ingredients) do
+					if ingredients[1] == axe_name and ingredients[2] ~= 0 then
+						ingredients[1] = axe_name .. "-item"
+						axe_recipe_consumers[axe_name] = true
+					end
+				end
+			end
+			if recipe.result == axe_name then
+				axe_recipe[axe_name] = recipe
 			end
 		end
+	end
+	for l, axe in pairs(axe_item) do
+		local axe_name = axe.name
+		modify = false
+		if axe_recipe_consumers[axe_name] == true then
+
+				data:extend(fake_axe(axe, axe_recipe[axe_name]))
+
+		end
+		axe_recipe[axe_name].hidden = true
 	end
 end
 
