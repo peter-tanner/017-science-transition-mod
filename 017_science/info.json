@@ -1,10 +1,10 @@
 {
   "name": "017_science",
-  "version": "0.1.5",
+  "version": "0.1.61",
   "factorio_version": "0.16",
   "title": "0.17 science conversion",
   "author": "npc_strider(morley376)",
   "contact": "https://mods.factorio.com/mod/017_science/discussion",
   "homepage": "http://steamcommunity.com/id/morley376",
-  "description": "Read the modpage for more information: https://mods.factorio.com/mod/017_science. Adds in the new science pack recipes and known tech tree, while keeping 0.16 recipes intact so that the player may update their base at their own pace. Implements almost all 0.17 balance changes: transport-belt, mining, smelting changes, and more (see page for full list). Compatible with existing saves, most big mods and will support release 0.17!"
+  "description": "THE FINAL WORKING VERSION OF THE MOD. Expect version 0.1.7 of the mod to be a migration mod, the purpose of which is to migrate your savegame to factorio 0.17 so that this mod can be removed. Read the modpage for more information: https://mods.factorio.com/mod/017_science. Adds in the new science pack recipes and known tech tree, while keeping 0.16 recipes intact so that the player may update their base at their own pace. Implements almost all 0.17 balance changes: transport-belt, mining, smelting changes, and more (see page for full list). Compatible with existing saves, most big mods and will support release 0.17!"
 }
